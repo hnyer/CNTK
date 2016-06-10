@@ -127,6 +127,10 @@ public:
         SetDataLocation(GetDeviceId() < 0 ? CurrentDataLocation::CPU : CurrentDataLocation::GPU, GetMatrixType());
     }
 
+    const shared_ptr<const CPUMatrix<ElemType>> GetCPUMatrix()
+    {
+        return m_CPUMatrix;
+    }
 private:
     Matrix(const MatrixFlags matrixFlags, const MatrixType matrixType, const MatrixFormat matrixFormat, DEVICEID_TYPE deviceID); // only used internally to initialize a blank matrix
     Matrix(const MatrixFlags matrixFlags, const MatrixType matrixType, DEVICEID_TYPE deviceID);                                  // only used internally to initialize a blank matrix

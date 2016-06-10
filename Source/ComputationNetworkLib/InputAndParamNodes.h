@@ -92,20 +92,40 @@ public:
 // TODO: add -Node to the class name
 // -----------------------------------------------------------------------
 template <class ElemType, class QuantizedType>
-class LearnableParameterQuantized : public LearnableParameter<ElemType>
+class LearnableParameterQuantized : public LearnableParameter<ElemType>, public std::enable_shared_from_this<LearnableParameterQuantized<ElemType, QuantizedType>>
 {
 public:
-    LearnableParameterQuantized(ComputationNodeBasePtr& learnableParameterNode,
-        std::shared_ptr<SymmetricQuantizer<ElemType, QuantizedType>>&  quantizer) : LearnableParameter<ElemType>(learnableParameterNode->GetDeviceId(), learnableParameterNode->GetName())
+    LearnableParameterQuantized(ComputationNodeBasePtr learnableParameterNode, std::shared_ptr<IQuantizerBase<ElemType, QuantizedType>> quantizer) : 
+        LearnableParameter<ElemType>(learnableParameterNode->GetDeviceId(), learnableParameterNode->GetName())
     {
+        auto pLearnableParameterNode = dynamic_pointer_cast<LearnableParameter<ElemType>>(learnableParameterNode);
+        if (!pLearnableParameterNode)
+            LogicError("Can not construct LearnableParameterQuantized from node %ls. Only LearnableParameter node can be used as an input to the constructor.",
+            learnableParameterNode->GetName().c_str());
+
+        if (!learnableParameterNode->IsLeaf())
+            LogicError("Can not construct LearnableParameterQuantized from node %ls. This node is not a leaf.",
+            learnableParameterNode->GetName().c_str());
+
+        //learnableParameterNode->CopyTo(std::enable_shared_from_this<LearnableParameterQuantized<ElemType, QuantizedType>>::shared_from_this(), learnableParameterNode->GetName(), CopyNodeFlags::copyNodeValue);
+
+        //pSob->
+
+        //pValue->
+
+       // auto values = learnableParameterNode->Tenso);
+
+        //shared_ptr<FrameRange> fr(FrameRange(nullptr));
+        //auto tensorShape = pLearnableParameterNode->GetSampleLayout();
+        /*auto sob = learnableParameterNode->ValueTensorFor(rank, fr.AllowBroadcast())->GetSOB();*/
+        /*        learnableParameterNode->gettenso
+        auto result = learnableParameterNode->ValueTensorFor(rank, fr);
+        */
         /*
         if (pNodes->OperationName() != LearnableParameter<ElemType>::TypeName())
         {
         */
-        /*auto pLearnableParameterNode = dynamic_pointer_cast<LearnableParameter<ElemType>>(learnableParameterNode);
-        if (!pLearnableParameterNode)
-        LogicError("Can not construct LearnableParameterQuantized from node %ls. Only LearnableParameter node can be used as an input to the constructor.",
-        learnableParameterNode->GetName().c_str());
+        /*
 
         TensorShape learnParShape = pLearnableParameterNode->GetSampleLayout();
         SetDims(learnParShape, false);

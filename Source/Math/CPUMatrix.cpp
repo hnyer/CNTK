@@ -6288,6 +6288,16 @@ void CPUMatrix<ElemType>::TensorOp(ElemType beta, const CPUMatrix<ElemType>& a, 
     }
 }
 
+// Quantize input matrix X with the given quantizer and return matrix B 
+template <class ElemType> template<class QuantizedType> //
+void CPUMatrix<ElemType>::Quantize(const CPUMatrix<ElemType>& A, CPUMatrix<QuantizedType>& B, IQuantizerBase<ElemType, QuantizedType> quantizer) 
+{
+
+    double* assa = reinterpret_cast<double*>(A.Data());
+    double* yyye = reinterpret_cast<double*>(B.Data());
+    yyye = assa;
+}
+
 // =======================================================================
 // explicit instantiations
 // =======================================================================
@@ -6313,8 +6323,11 @@ template void CPUMatrix<char>::SetValue(CPUMatrix<char> const&);
 //template void CPUMatrix<char>::SetValue(GPUSparseMatrix<char> const&);
 template void CPUMatrix<char>::RequireSize(const size_t numRows, const size_t numCols, bool growOnly);
 template void CPUMatrix<char>::Resize(const size_t numRows, const size_t numCols, bool growOnly);
+//template void CPUMatrix<float>::Quantize<short>(const CPUMatrix<float>& X, CPUMatrix<short>& Y, IQuantizerBase<float, short> quantizer);
+//template void CPUMatrix<double>::Quantize<short>(const CPUMatrix<double>& X, CPUMatrix<short>& Y, IQuantizerBase<double, short> quantizer);
 
 template CPUMatrix<int>::CPUMatrix(const size_t, const size_t, int*, const size_t);
 template CPUMatrix<int>::~CPUMatrix();
 
 }}}
+
