@@ -191,13 +191,14 @@ static void augmentneighbors(const std::vector<std::vector<float>>& frames, cons
 // ---------------------------------------------------------------------------
 // RandomOrdering -- class to help manage randomization of input data
 // ---------------------------------------------------------------------------
+//
 
 static inline size_t rand(const size_t begin, const size_t end)
 {
     const size_t randno = ::rand() * RAND_MAX + ::rand(); // BUGBUG: still only covers 32-bit range
     return begin + randno % (end - begin);
 }
-
+/*
 class RandomOrdering // note: NOT thread-safe at all
 {
     // constants for randomization
@@ -303,7 +304,7 @@ public:
         }
         return map; // caller can now access it through operator[]
     }
-};
+};*/
 
 //typedef unsigned short CLASSIDTYPE; // type to store state ids; don't use size_t --saves HUGE amounts of RAM
 typedef unsigned int CLASSIDTYPE; // mseltzer - change to unsigned int for untied context-dependent phones
